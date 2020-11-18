@@ -60,7 +60,7 @@ class SockExpect:
         """Send raw bytes to socket terminated by self.eol."""
         self.s.send(line + self.eol)
 
-    def expect(self, regexp: typing.Union[bytes, re.Pattern]):
+    def expect(self, regexp: typing.Union[bytes, typing.Pattern]):
         """Receive and save data from socket until the given regexp
         is matched, a timeout occurs, or the socket is closed.
         Data is read in chunks of size up to self.maxchunksize
@@ -86,7 +86,7 @@ class SockExpect:
                     break
             if alen0 > self.maxbuffsize - self.maxchunksize:
                 del self.after[:self.maxchunksize]
-                alen0 = len(self.maxchunksize)
+                alen0 = self.maxchunksize
             try:
                 self.after += self.s.recv(self.maxchunksize)
             except socket.timeout:
